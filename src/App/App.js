@@ -1,11 +1,15 @@
 import React from 'react';
-import Header from '../components/Header'
-import './Style.css'
+// import api from '../services/api';
+import './Style.css';
+import Header from '../components/Header';
+import Main from '../pages/main';
+
 
 const App = () => (
  
     <div className="App">
      <Header/>
+     <Main/>
     </div>
   )
 
