@@ -20,7 +20,34 @@ export default class Main extends Component {
       }
     
       handleSubmit(event) {
-        this.loadMovie();
+         
+        switch ((this.state.search).toLowerCase()) {
+            case 'ação': this.loadMovieGenre(1, 28); break;
+            case 'aventura': this.loadMovieGenre(1, 12); break;
+            case 'animação': this.loadMovieGenre(1, 16); break;
+            case 'comédia': this.loadMovieGenre(1, 35); break;
+            case 'crime': this.loadMovieGenre(1, 80); break;
+            case 'documentário': this.loadMovieGenre(1, 90); break;
+            case 'drama': this.loadMovieGenre(1, 18); break;
+            case 'família': this.loadMovieGenre(1, 10751); break;
+            case 'fantasia': this.loadMovieGenre(1, 14); break;
+            case 'história': this.loadMovieGenre(1, 36); break;
+            case 'terror': this.loadMovieGenre(1, 27); break;
+            case 'música': this.loadMovieGenre(1, 10402); break;
+            case 'mistério': this.loadMovieGenre(1, 9648); break;
+            case 'romance': this.loadMovieGenre(1, 10749); break;
+            case 'ficção científica': this.loadMovieGenre(1, 878);break; 
+            case 'cinema TV': this.loadMovieGenre(1, 10770); break;
+            case 'thriller': this.loadMovieGenre(1, 53); break;
+            case 'guerra': this.loadMovieGenre(1, 10752); break;
+            case 'faroeste': this.loadMovieGenre(1, 37); break;
+                
+        
+            default: this.loadMovie();
+                break;
+        }
+      
+        
         event.preventDefault();
       }
 
@@ -31,7 +58,38 @@ export default class Main extends Component {
    loadMovie = async (page=1) => {
     let myPage = 1;
 
-        const response = await api.get(`movie?api_key=b160d520a251ec089deab6fdc48006f2&language=pt-BR&query=${this.state.search}&page=${myPage}`)
+        const response = await api.get(`search/movie?api_key=b160d520a251ec089deab6fdc48006f2&language=pt-BR&query=${this.state.search}&page=${myPage}`)
+        console.log(response);
+        const {results, ...movieInfo} = response.data
+        this.setState({movieInfo});
+        this.setState({page});
+        
+        if (page !== 1) {myPage = Math.floor(Number(page)/4.01) + 1;}
+
+        console.log('page=' + page + ' e mypage='+myPage + ' e PAGE FUN='+page)
+            
+        // this.setState({movie: results});
+        let i;
+        if (myPage === 1) {
+            i = (Number(page)-1)*5 
+        }else{
+            i = ((Number(page)-1)*5)-((myPage-1)*20)
+        }
+        
+            this.setState({movie: [
+                results[i],
+                results[i+1],
+                results[i+2],
+                results[i+3],
+                results[i+4]
+            ]});
+        
+   };
+
+   loadMovieGenre = async (page=1, genre) => {
+    let myPage = 1;
+
+        const response = await api.get(`discover/movie?api_key=b160d520a251ec089deab6fdc48006f2&language=pt-BR&sort_by=popularity.desc&page=1&with_genres=${genre}`)
         console.log(response);
         const {results, ...movieInfo} = response.data
         this.setState({movieInfo});
