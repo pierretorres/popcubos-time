@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import api from '../../services/api';
 
-
 export default class Main extends Component {
     constructor(props) {
         super(props);
@@ -28,12 +27,36 @@ export default class Main extends Component {
     componentDidMount(){
     //    this.loadMovie();
    }
-   loadMovie = async (page = 1) => {
-    const response = await api.get(`movie?api_key=b160d520a251ec089deab6fdc48006f2&language=pt-BR&query=${this.state.search}&page=${page}`)
-    console.log(response);
-    const {results, ...movieInfo} = response.data
 
-    this.setState({ movie: results, movieInfo, page});
+   loadMovie = async (page=1) => {
+    let myPage = 1;
+
+        const response = await api.get(`movie?api_key=b160d520a251ec089deab6fdc48006f2&language=pt-BR&query=${this.state.search}&page=${myPage}`)
+        console.log(response);
+        const {results, ...movieInfo} = response.data
+        this.setState({movieInfo});
+        this.setState({page});
+        
+        if (page !== 1) {myPage = Math.floor(Number(page)/4.01) + 1;}
+
+        console.log('page=' + page + ' e mypage='+myPage + ' e PAGE FUN='+page)
+            
+        // this.setState({movie: results});
+        let i;
+        if (myPage === 1) {
+            i = (Number(page)-1)*5 
+        }else{
+            i = ((Number(page)-1)*5)-((myPage-1)*20)
+        }
+        
+            this.setState({movie: [
+                results[i],
+                results[i+1],
+                results[i+2],
+                results[i+3],
+                results[i+4]
+            ]});
+        
    };
 
     pageOne = (id) => { 
@@ -72,8 +95,8 @@ export default class Main extends Component {
        </form>
        
             {movie.map( movie =>(
-              <article key={movie.id}>
-                  {/* <img src={'https://image.tmdb.org/t/p/w200' + movie.poster_path} alt="Logo" /> */}
+              <article key={movie.id} >
+                  <img src={'https://image.tmdb.org/t/p/w200' + movie.poster_path} alt="Logo" />
                   <h2>{movie.title}</h2>
                   <h2>{movie.vote_average*10 + '%'}</h2>
                   <h3>{movie.release_date}</h3>
