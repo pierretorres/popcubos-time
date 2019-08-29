@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import api from '../../services/api';
+// import api from '../../services/api';
 
 
 class Search extends Component {
@@ -20,25 +20,11 @@ class Search extends Component {
      alert('Um nome foi enviado: ' + this.state.value);
      event.preventDefault();
    }
-   componentDidMount(){
-       
-    this.loadMovie();
-}
-loadMovie = async () => {
-    // const response = await api.get(movieId +'?api_key=b160d520a251ec089deab6fdc48006f2')
-    const response = await api.get('?api_key=b160d520a251ec089deab6fdc48006f2')
-
- console.log(response);
-};
-
+  
    render() {
      return (
        <form onSubmit={this.handleSubmit}>
-         <label>
-           Nome:
            <input type="text" value={this.state.value} onChange={this.handleChange} />
-         </label>
-         {/* <input type="submit" value="Enviar" /> */}
        </form>
      );
    }
