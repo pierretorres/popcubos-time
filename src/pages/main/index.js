@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import api from '../../services/api';
+import { Link } from 'react-router-dom'
 
 export default class Main extends Component {
     constructor(props) {
@@ -153,15 +154,18 @@ export default class Main extends Component {
        </form>
        
             {movie.map( movie =>(
+                
               <article key={movie.id} >
+              <Link  to={`/movies/${movie.id}`} >
                   <img src={'https://image.tmdb.org/t/p/w200' + movie.poster_path} alt="Logo" />
                   <h2>{movie.title}</h2>
                   <h2>{movie.vote_average*10 + '%'}</h2>
                   <h3>{movie.release_date}</h3>
                   <p>{movie.overview}</p>
-                  {/* <p>{movie.genre_ids + ""}</p> */}
-
+                    {/* <Link to="/movies/3"/> */}
+                </Link>
               </article>
+              
             ))}
             <button id="button1" onClick={this.pageOne} value={Number(this.state.page) - 2}>{Number(this.state.page) - 2}</button>
             <button id="button2" onClick={this.pageTwo} value={Number(this.state.page) - 1}>{Number(this.state.page) - 1}</button>
