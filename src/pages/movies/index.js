@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import api from '../../services/api'
-// import YouTube from 'react-youtube';
+import YouTube from 'react-youtube';
 
 export default class Movies extends Component {
 
@@ -16,14 +16,19 @@ export default class Movies extends Component {
         console.log(response)
         this.setState({movie: response.data});
         this.setState({trailer: responseVideo.data.results[0]});
-        
-        console.log(responseVideo.data.results[0].id)
     }
     render(){
         const { movie }= this.state;    
-        const { trailer }= this.state;    
-        
+        const { trailer }= this.state;  
+        const opts = {
+            height: '390',
+            width: '640',
+            playerVars: { // https://developers.google.com/youtube/player_parameters
+              autoplay: 0
+            }
+          }; 
         return(
+            
             <div className="movie-info">
             
                 <h2>{movie.title}</h2>
@@ -40,14 +45,22 @@ export default class Movies extends Component {
                 <p>{trailer.name}</p>
 
                 <img src={'https://image.tmdb.org/t/p/w200' + movie.poster_path} alt="Logo" />
+           
                 
-                {/* <YouTube
-                videoId="2g811Eo7K8U"
+                <YouTube
+                videoId={this.trailer()}
+                opts={opts}
                 onReady={this._onReady}
-            /> */}
-
-
+                />
             </div>
         );
     }
+    trailer() {
+        let i = this.state.trailer.key
+        console.log(this.state.trailer.key+'mia pica')
+        return i
+    }
+    _onReady(event) {
+        event.target.pauseVideo();
+      }
 }
