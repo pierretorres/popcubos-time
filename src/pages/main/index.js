@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import api from '../../services/api';
 import { Link } from 'react-router-dom'
+import './Style.css';
+import { thisExpression } from '@babel/types';
 
 export default class Main extends Component {
     constructor(props) {
@@ -18,10 +20,11 @@ export default class Main extends Component {
     
     handleChange(event) {
         this.setState({search: event.target.value});
+        this.handleSubmit(event);
+       
       }
     
       handleSubmit(event) {
-         
         switch ((this.state.search).toLowerCase()) {
             case 'ação': this.loadMovieGenre(1, 28); break;
             case 'aventura': this.loadMovieGenre(1, 12); break;
@@ -47,8 +50,6 @@ export default class Main extends Component {
             default: this.loadMovie();
                 break;
         }
-      
-        
         event.preventDefault();
       }
 
@@ -65,7 +66,7 @@ export default class Main extends Component {
         this.setState({movieInfo});
         this.setState({page});
         
-        if (page !== 1) {myPage = Math.floor(Number(page)/4.01) + 1;}
+        if (page !== 1) {myPage = Math.floor(Number(page)/4.0001) + 1;}
 
         console.log('page=' + page + ' e mypage='+myPage + ' e PAGE FUN='+page)
             
@@ -76,7 +77,7 @@ export default class Main extends Component {
         }else{
             i = ((Number(page)-1)*5)-((myPage-1)*20)
         }
-        
+        if (this.state.movieInfo.total_results>4) {
             this.setState({movie: [
                 results[i],
                 results[i+1],
@@ -84,6 +85,10 @@ export default class Main extends Component {
                 results[i+3],
                 results[i+4]
             ]});
+        }else{
+            this.setState({movie: results});
+        }
+            
         
    };
 
@@ -144,34 +149,65 @@ export default class Main extends Component {
             console.log(clickedPage)
             this.loadMovie(clickedPage)
     }
-   
+    convert(date){
+        console.log("data de entrasa", date)
+      if(date === undefined){
+          return "Sem data"
+      }else{
+
+        let dia  = date.split("-")[2];
+        let mes  = date.split("-")[1];
+        let ano  = date.split("-")[0];
+
+       let data = dia + '/' + ("0"+mes).slice(-2) + '/' + ("0"+ano).slice(-4);
+
+        console.log( data)
+
+        return data;
+      }
+
+    }
     render(){
+        
+        // let pageNumber1, pageNumber2, pageNumber3, pageNumber4, pageNumber5,pageNumber;
         const { movie } = this.state;
+    //   
         return(
+            
        <div className="movie-list">
        <form onSubmit={this.handleSubmit}>
-           <input type="text" value={this.state.value} onChange={this.handleChange} />
+           <input type="text" value={this.state.value} onChange={this.handleChange} id="search" placeholder="Busque um filme por nome ou gênero..."/>
        </form>
-       
+       <div className="listContainer">
             {movie.map( movie =>(
-                
-              <article key={movie.id} >
-              <Link  to={`/movies/${movie.id}`} >
-                  <img src={'https://image.tmdb.org/t/p/w200' + movie.poster_path} alt="Logo" />
-                  <h2>{movie.title}</h2>
-                  <h2>{movie.vote_average*10 + '%'}</h2>
-                  <h3>{movie.release_date}</h3>
-                  <p>{movie.overview}</p>
-                    {/* <Link to="/movies/3"/> */}
+                <Link  to={`/movies/${movie.id}`} >
+                    <div className="cardContainer" key={movie.id} >
+                        <div className="cardContainerMovie">
+                            <div className="cardContainerPoster">
+                            <img className="cardBackdrop" src={'https://image.tmdb.org/t/p/w780' + movie.backdrop_path} alt="Logo" />
+                                <img className="cardPoster" src={'https://image.tmdb.org/t/p/original' + movie.poster_path} alt="Logo" />
+                            </div>  
+                            <div className="cardContainerInfo">
+                                <h2  className="cardTitle">{movie.title}</h2>
+                                <div className="cardContainerRating">
+                                    <p  className="cardRating">{movie.vote_average*10 + '%'}</p>
+                                </div>
+                                <p  className="cardDate">{this.convert(movie.release_date)}</p>
+                                <p  className="cardOverview">{movie.overview}</p>
+                            </div>
+                            </div>
+                        </div>
                 </Link>
-              </article>
               
             ))}
-            <button id="button1" onClick={this.pageOne} value={Number(this.state.page) - 2}>{Number(this.state.page) - 2}</button>
-            <button id="button2" onClick={this.pageTwo} value={Number(this.state.page) - 1}>{Number(this.state.page) - 1}</button>
-            <button id="button3" onClick={this.pageThree}value={Number(this.state.page)}>{Number(this.state.page)}</button>
-            <button id="button4" onClick={this.pageFour}value={Number(this.state.page) + 1}>{Number(this.state.page) + 1}</button>
-            <button id="button5" onClick={this.pageFive}value={Number(this.state.page) + 2}>{Number(this.state.page) + 2}</button>
+            </div>
+            
+            <button id="button1" onClick={this.pageOne} value={Number(this.state.page)}>{Number(this.state.page)}</button>
+            <button id="button2" onClick={this.pageTwo} value={Number(this.state.page) + 1}>{Number(this.state.page) + 1}</button>
+            <button id="button3" onClick={this.pageThree}value={Number(this.state.page) + 2}>{Number(this.state.page) + 2}</button>
+            <button id="button4" onClick={this.pageFour}value={Number(this.state.page) + 3}>{Number(this.state.page) + 3}</button>
+            <button id="button5" onClick={this.pageFive}value={Number(this.state.page) + 4}>{Number(this.state.page) + 4}</button>
+           
        </div>
         );
     }
