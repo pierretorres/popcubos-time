@@ -1,0 +1,252 @@
+
+.movieContainerInfo {
+    width: 100%;
+    margin: 3em auto;
+    background-color: #f2f2f2;
+
+  }
+  .movieContainerTitle{
+      background-color: #e6e6e6;
+      display: grid;
+      grid-template-columns: repeat(2, auto)
+}
+
+  
+  
+  .movieTitle{
+    font-size: 1.7em;
+    color: #116193;
+    font-family: 'Abel', sans-serif;
+    padding: 0.4em 1.6em;
+  }
+    .movieData{
+        color:   #959595;
+        text-align: right; 
+        padding: 1.1em 2em 0 0;
+    }
+
+    .movieInfoTitle{
+        padding: 1em 0 0.1em;
+        font-size: 1.3em;
+        color: #116193;
+        font-family: 'Abel', sans-serif;
+    }
+
+    hr.movieLine{
+        padding: 0 0;
+        border: 1px solid #79edeb
+    }
+
+    .movieContainerDetail{
+        padding: 0 2.8em;
+    }
+    .movieInfoTable{
+        padding: 1em 0 0em;
+        font-size: 1.15em;
+        color: #116193;
+        font-family: 'Abel', sans-serif;
+    }
+    .movieOverview{
+        padding: 1em 0 1.2em 0;
+    }
+
+
+    @media (min-width : 950px) and (max-width : 1400px) {
+    .movieContainerInfo{
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        margin: 0 0 2em 0;
+    }
+    .movieContainerTable{
+        display: grid;
+        grid-template-columns: repeat(6, auto);
+        text-align: center;
+    }
+    .movieBackdrop{
+        display: none;
+    }
+
+    .movieDateOut {
+        background: #116193;
+        display: inline-block;
+        border-radius: 50%;
+        padding: .3em;
+        position: relative;
+        top: -2em;
+        left: .7em;
+        margin:5em 0 0 32em;
+        
+      }
+    
+      .movieDateIn {
+        background-color: #116193;
+        border: 8px solid #00E8E4;
+        display: inline-block;
+        border-radius: 50%;
+        padding: 0.4em;
+        color: #00E8E4;
+        font-family: 'Abel';
+        font-size: 40px;
+    }
+    
+}
+@media (min-width : 770px) and (max-width : 950px) {
+    .movieContainerInfo{
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        margin: 0 0 2em 0;
+    }
+    .movieBackdrop{
+        display: none;
+    }
+    .movieContainerTable{
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        text-align: center;
+    }
+    .movieDateOut {
+        background: #116193;
+        display: inline-block;
+        border-radius: 50%;
+        padding: .3em;
+        position: relative;
+        top: -2em;
+        left: .7em;
+        margin:3em 0 0 11.8em;
+        
+      }
+    
+      .movieDateIn {
+        background-color: #116193;
+        border: 8px solid #00E8E4;
+        display: inline-block;
+        border-radius: 50%;
+        padding: 0.4em;
+        color: #00E8E4;
+        font-family: 'Abel';
+        font-size: 40px;
+    }
+    
+}
+
+@media (max-width : 770px) and (max-width : 950px) {
+    .movieContainerInfo{
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        margin: 0 0 2em 0;
+    }
+    .movieBackdrop{
+        display: show;
+    }
+    .movieImage{
+        display: none;
+    }
+    .movieackdrop{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    .movieContainerTable{
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        text-align: center;
+    }
+    
+}
+
+@media  (min-width : 1400px) {
+    .movieContainerInfo{
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        margin: 0 0 2em 0;
+
+        
+    }
+    .movieContainerTable{
+        display: grid;
+        grid-template-columns: repeat(6, auto);
+        text-align: center;
+    }
+    .movieBackdrop{
+        display: none;
+    }
+    .movieDateOut {
+        background: #116193;
+        display: inline-block;
+        border-radius: 50%;
+        padding: .3em;
+        position: relative;
+        top: -2em;
+        left: .7em;
+        margin:5em 0 0 52em;
+        
+      }
+    
+      .movieDateIn {
+        background-color: #116193;
+        border: 8px solid #00E8E4;
+        display: inline-block;
+        border-radius: 50%;
+        padding: 0.4em;
+        color: #00E8E4;
+        font-family: 'Abel';
+        font-size: 40px;
+    }
+}
+
+    @media  (max-width : 770px) {
+        .movieContainerInfo{
+            display: grid;
+            grid-template-columns: repeat(1, auto);
+            margin: 0 0 2em 0;
+    
+            
+        }
+        .movieBackdrop{
+            display: show;
+            width: 100%;
+        }
+
+    .movieImage{
+            display: none;
+        }
+
+        .movieDateOut {
+            background: #116193;
+            display: inline-block;
+            border-radius: 50%;
+            padding: .3em;
+            position: relative;
+            top: -2em;
+            left: .7em;
+            float: left;
+             margin:5em 0 0 15em;
+
+            
+          }
+        
+          .movieDateIn {
+            background-color: #116193;
+            border: 8px solid #00E8E4;
+            display: inline-block;
+            border-radius: 50%;
+            padding: 0.4em;
+            color: #00E8E4;
+            font-family: 'Abel';
+            font-size: 40px;
+        }
+
+        .date{
+            width: 100%;
+            text-align: right;
+        }
+       
+    
+    
+    
+}
+
+    ul{
+        list-style-type: none;
+
+    }

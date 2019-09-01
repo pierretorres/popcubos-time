@@ -37,7 +37,13 @@
     text-decoration:none; 
 }
 /* Cards de pesquisa */
+.cardContainer {
+    width: 90%;
+    margin: 3em auto;
+    background-color: #EBEBEB;
 
+  }
+  
 @media (min-width : 1150px) { /* Desktop */
 .listContainer {
     display: grid;
@@ -60,12 +66,7 @@
 }
 
 
-.cardContainer {
-    width: 90%;
-    margin: 3em auto;
-    background-color: #EBEBEB;
 
-  }
 @media (max-width : 1150px) and (min-width : 700px) { /* Tablet */
       .cardContainerMovie {
         width: 100%;

@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import api from '../../services/api'
 import YouTube from 'react-youtube';
-let i = [1,2,3]
+import './Style.css';
 export default class Movies extends Component {
 
     state = {
@@ -76,34 +76,79 @@ export default class Movies extends Component {
     }
     render(){
         const { movie }= this.state;     
-        const { convert }= this.state;     
-        const { trailer }= this.state;  
+        const { convert }= this.state;   
         const opts = {
-            height: '390',
-            width: '640',
+            height: '500',
+            width: '100%',
             playerVars: { // https://developers.google.com/youtube/player_parameters
               autoplay: 0
             }
           }; 
         return(
             
-            <div className="movie-info">
-            
-                <h2>{movie.title}</h2>
-                <h2>{movie.vote_average*10 + '%'}</h2>
-                <h3>{convert.data}</h3>
-                <p>{movie.overview}</p>
-                <p>{convert.situacao}</p> 
-                <p>{convert.idioma}</p> 
-                <p>{convert.duracao}</p> 
-                <p>{"$"+Number(movie.budget).toLocaleString('pt-BR') + ",00"}</p> 
-                <p>{"$"+Number(movie.revenue).toLocaleString('pt-BR') + ",00"}</p>
-                <p>{"$"+((movie.revenue)-(movie.budget)).toLocaleString('pt-BR') + ",00"}</p>
-                
+            <div className="movieContainer">
+                    <div className="movieContainerDados">
+                    <div className="movieContainerTitle">
+                        <h2 className="movieTitle">{movie.title}</h2>
+                        <p className="movieData">{convert.data}</p>
+                        </div>
+                        
+                        <div className="movieContainerInfo">
+                        <div className="movieBackdrop">
+                        <img className="movieBackdrop" src={'https://image.tmdb.org/t/p/w780' + movie.backdrop_path} alt="Logo" />
+                        </div>
+                        <div className="movieContainerDetail">
+                        <h3 className="movieInfoTitle">Sinopse</h3>
+                        <hr className="movieLine"></hr>
+                        <p className="movieOverview">{movie.overview}</p>
+                        <h3 className="movieInfoTitle">Informações</h3>
+                        <hr className="movieLine"></hr>
+                        <table className="movieContainerTable">
+                            <ul>
+                                <li className="movieInfoTable">Situação</li>
+                                <li className="movieInfoData">{convert.situacao}</li>
+                                </ul>
+                            <ul>
+                                <li className="movieInfoTable">Idioma</li>
+                                <li className="movieInfoData">{convert.idioma}</li>
+                                </ul>
+                            <ul>
+                                <li className="movieInfoTable">Duração</li>
+                                <li className="movieInfoData">{convert.duracao}</li>
+                                </ul>
+                            <ul>
+                                <li className="movieInfoTable">Orçamento</li>
+                                <li className="movieInfoData">{"$"+Number(movie.budget).toLocaleString('pt-BR') + ",00"}</li>
+                                </ul>
+                            <ul>
+                                <li className="movieInfoTable">Receita</li>
+                                 <li className="movieInfoData">{"$"+Number(movie.revenue).toLocaleString('pt-BR') + ",00"}</li>
+                                 </ul>
+                            <ul>
+                                <li className="movieInfoTable">Lucro</li>
+                                <li className="movieInfoData">{"$"+((movie.revenue)-(movie.budget)).toLocaleString('pt-BR') + ",00"}</li>
+                            </ul>
+                            <ul>
+                        </ul>
 
-                <img src={'https://image.tmdb.org/t/p/w500' + movie.poster_path} alt="Logo" />
-           
+                        </table>
+                        <div className="date">
+                        <div className="movieDateOut">
+                            <p className="movieDateIn">{movie.vote_average*10 + '%'}</p>
+                        </div>
+                        </div>
+                        </div>
+                        
+              
                 
+                
+                <div className="movieContainerImage">
+               
+                    <img className="movieImage" src={'https://image.tmdb.org/t/p/w300' + movie.poster_path} alt="Logo" />
+                </div>
+                </div>
+           
+                </div>
                 <YouTube
                 videoId={this.trailer()}
                 opts={opts}
@@ -113,7 +158,11 @@ export default class Movies extends Component {
         );
     }
     trailer() {
-        let i = this.state.trailer.key
+        let i;
+        if (this.state.trailer.key !== undefined) {
+            i = this.state.trailer.key
+        }
+        
         return i
     }
     _onReady(event) {
