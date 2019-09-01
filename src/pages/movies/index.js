@@ -15,7 +15,7 @@ export default class Movies extends Component {
         const { id } = this.props.match.params;
         const response = await api.get(`movie/${id}?api_key=b160d520a251ec089deab6fdc48006f2&language=pt-BR`);
         const responseVideo = await api.get(`movie/${id}/videos?api_key=b160d520a251ec089deab6fdc48006f2&language=pt-BR`);        
-        console.log(response)
+        console.log(responseVideo.data.results[0])
         this.setState({movie: response.data});
         this.setState({language: response.data.spoken_languages[0]});
         this.setState({trailer: responseVideo.data.results[0]});
@@ -159,7 +159,7 @@ export default class Movies extends Component {
     }
     trailer() {
         let i;
-        if (this.state.trailer.key !== undefined) {
+        if (this.state.trailer !== undefined) {
             i = this.state.trailer.key
         }
         
