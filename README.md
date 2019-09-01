@@ -7,6 +7,7 @@ O web app possuí duas páginas, onde na primeira página é possível realizar 
 A API que o app está consumindo é a The Movie DB.
 
 Para compilar e executar a aplicação você deverá ter instalado o Yarn e na raiz da aplicação executar os comandos:
+
 yarn install
 yarn start
 
