@@ -16,3 +16,6 @@ const App = () => (
   )
 
 export default App;
+
+// Desenvolvido por Pierre Torres
+// github.com/pierretorres

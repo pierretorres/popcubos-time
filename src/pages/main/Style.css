@@ -163,3 +163,68 @@
   .cardPoster {
     width: 100%;
   }
+
+  .button1 {
+    background-color: #116193;
+    border: 3px solid #00E8E4;
+    display: inline-block;
+    border-radius: 50%;
+    padding: 0.9em;
+    color: #00E8E4;
+    max-width: 57px;
+    min-width: 57px;
+    max-height: 57px;
+    font-family: 'Abel';
+}
+
+
+
+.btn1 {
+    pointer-events:none;
+    color:#fafafa !important;
+
+}
+.btn2 {
+    pointer-events: none;
+    color:#fafafa !important; 
+    
+}
+
+.PageButtons{
+    padding:0px;
+    margin:0px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 40px;
+   
+}
+
+.PageButtons li{
+    color: #116193;
+    display: inline-block;
+    padding: .2em .6em;
+    font-family: 'Abel';
+    font-size: 1.1em;
+    cursor: pointer;
+}
+.PageButtons li:hover{
+    color: #00E8E4;
+  
+}
+
+.btn0 li{
+    background-color: #116193;
+    border: 2px solid #00E8E4;
+    display: inline-block;
+    border-radius: 50%;
+    color: #00E8E4 !important;
+    font-size: 1.5em !important;
+}
+
+
+.pageList {
+    text-align: center;
+    margin-bottom: 1em;
+  }
+ 
+  

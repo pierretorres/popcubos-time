@@ -6,3 +6,6 @@ const Header = () => (
 );
 
 export default Header;
+
+// Desenvolvido por Pierre Torres
+// github.com/pierretorres

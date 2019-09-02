@@ -15,16 +15,13 @@ export default class Movies extends Component {
         const { id } = this.props.match.params;
         const response = await api.get(`movie/${id}?api_key=b160d520a251ec089deab6fdc48006f2&language=pt-BR`);
         const responseVideo = await api.get(`movie/${id}/videos?api_key=b160d520a251ec089deab6fdc48006f2&language=pt-BR`);        
-        console.log(responseVideo.data.results[0])
         this.setState({movie: response.data});
         this.setState({language: response.data.spoken_languages[0]});
         this.setState({trailer: responseVideo.data.results[0]});
         this.setState({convert: this.convert(this.state.movie.status, this.state.language.name, this.state.movie.runtime, this.state.movie.release_date)});
 
 
-        console.log(this.state.movie.genres[0].name)
-        // console.log(this.convert(this.state.movie.status, this.state.language.name, this.state.movie.runtime, this.state.movie.release_date).data)
-        
+       
     }
     convert(status, language, runtime, date){
         let  idioma, situacao, duracao, data;
@@ -61,15 +58,12 @@ export default class Movies extends Component {
         let hora = Math.floor(Number(runtime)/60);
         let min = Math.floor(Number(runtime)%60);
         duracao = hora+"h "+min+"min"
-        console.log( duracao)
 
         let dia  = date.split("-")[2];
         let mes  = date.split("-")[1];
         let ano  = date.split("-")[0];
 
         data = dia + '/' + ("0"+mes).slice(-2) + '/' + ("0"+ano).slice(-4);
-
-        console.log( data)
 
         return {idioma: idioma, situacao: situacao, duracao: duracao, data: data}
 
@@ -80,7 +74,7 @@ export default class Movies extends Component {
         const opts = {
             height: '500',
             width: '100%',
-            playerVars: { // https://developers.google.com/youtube/player_parameters
+            playerVars: { 
               autoplay: 0
             }
           }; 
@@ -169,3 +163,6 @@ export default class Movies extends Component {
         event.target.pauseVideo();
     }
 }
+
+// Desenvolvido por Pierre Torres
+// github.com/pierretorres

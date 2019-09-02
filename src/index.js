@@ -6,3 +6,6 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 serviceWorker.unregister();
+
+// Desenvolvido por Pierre Torres
+// github.com/pierretorres

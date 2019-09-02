@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import api from '../../services/api';
 import { Link } from 'react-router-dom'
-import './Style.css';
-import { thisExpression } from '@babel/types';
+import'./Style.css';
 
 export default class Main extends Component {
     constructor(props) {
@@ -11,7 +10,10 @@ export default class Main extends Component {
             movie: [],
             movieInfo:{},
             page: 1,
-            search: ''
+            search: '',
+            navegation0: 1,
+            navegation1: 1,
+            navegation2: 1
         };
     
         this.handleChange = this.handleChange.bind(this);
@@ -59,18 +61,12 @@ export default class Main extends Component {
 
    loadMovie = async (page=1) => {
     let myPage = 1;
-
+   
+    if (page !== 1) {myPage = Math.floor(Number(page)/4.0001) + 1;}
         const response = await api.get(`search/movie?api_key=b160d520a251ec089deab6fdc48006f2&language=pt-BR&query=${this.state.search}&page=${myPage}`)
-        console.log(response);
         const {results, ...movieInfo} = response.data
         this.setState({movieInfo});
         this.setState({page});
-        
-        if (page !== 1) {myPage = Math.floor(Number(page)/4.0001) + 1;}
-
-        console.log('page=' + page + ' e mypage='+myPage + ' e PAGE FUN='+page)
-            
-        // this.setState({movie: results});
         let i;
         if (myPage === 1) {
             i = (Number(page)-1)*5 
@@ -89,23 +85,54 @@ export default class Main extends Component {
             this.setState({movie: results});
         }
             
+        switch (this.state.page) {
+            case (this.state.movieInfo.total_pages)*4: this.navPage2();
+                break;
+            case (this.state.movieInfo.total_pages)*4+1: this.navPage2();
+                break;
+            case (this.state.movieInfo.total_pages)*4+2: this.navPage2();
+                break;
+            case (this.state.movieInfo.total_pages)*4+3: this.navPage2();
+                break;
+
+               
         
+            default: this.setState({navegation1:3});
+
+                break;
+        }
+        switch (this.state.page) {
+            case (this.state.movieInfo.total_pages)*4+1: this.navPage1();
+                break;
+            case (this.state.movieInfo.total_pages)*4+2: this.navPage1();
+                break;
+            case (this.state.movieInfo.total_pages)*4+3: this.navPage1();
+                break;
+            case (this.state.movieInfo.total_pages)*4+4: this.navPage1();
+                break;
+        
+            default: 
+            this.setState({navegation2:3});
+
+                break;
+        }
+       
+        this.setState({navegation0: 0});
+        
+
    };
 
    loadMovieGenre = async (page=1, genre) => {
+   
     let myPage = 1;
 
         const response = await api.get(`discover/movie?api_key=b160d520a251ec089deab6fdc48006f2&language=pt-BR&sort_by=popularity.desc&page=1&with_genres=${genre}`)
-        console.log(response);
         const {results, ...movieInfo} = response.data
         this.setState({movieInfo});
         this.setState({page});
         
         if (page !== 1) {myPage = Math.floor(Number(page)/4.01) + 1;}
-
-        console.log('page=' + page + ' e mypage='+myPage + ' e PAGE FUN='+page)
             
-        // this.setState({movie: results});
         let i;
         if (myPage === 1) {
             i = (Number(page)-1)*5 
@@ -120,37 +147,30 @@ export default class Main extends Component {
                 results[i+3],
                 results[i+4]
             ]});
-        
    };
 
     pageOne = (id) => { 
        let clickedPage = document.getElementById (id.target.id).value
-            console.log(clickedPage)
             this.loadMovie(clickedPage)
     }
     pageTwo = (id) => {
         let clickedPage = document.getElementById (id.target.id).value
-            console.log(clickedPage)
             this.loadMovie(clickedPage)
     }
     pageThree = (id) => { 
         let clickedPage = document.getElementById (id.target.id).value
-            console.log(clickedPage)
             this.loadMovie(clickedPage)
     }
     pageFour = (id) => { 
         let clickedPage = document.getElementById (id.target.id).value
-            console.log(clickedPage)
             this.loadMovie(clickedPage)
             
     }
     pageFive = (id) => {
         let clickedPage = document.getElementById (id.target.id).value
-            console.log(clickedPage)
             this.loadMovie(clickedPage)
     }
     convert(date){
-        console.log("data de entrasa", date)
       if(date === undefined){
           return "Sem data"
       }else{
@@ -161,17 +181,22 @@ export default class Main extends Component {
 
        let data = dia + '/' + ("0"+mes).slice(-2) + '/' + ("0"+ano).slice(-4);
 
-        console.log( data)
 
         return data;
       }
 
     }
+    navPage2(){
+        this.setState({navegation1:1});
+        this.setState({navegation2: 1});
+
+    }
+    navPage1(){
+        this.setState({navegation2: 1});
+    }
     render(){
         
-        // let pageNumber1, pageNumber2, pageNumber3, pageNumber4, pageNumber5,pageNumber;
         const { movie } = this.state;
-    //   
         return(
             
        <div className="movie-list">
@@ -201,20 +226,20 @@ export default class Main extends Component {
               
             ))}
             </div>
-            
-            <button id="button1" onClick={this.pageOne} value={Number(this.state.page)}>{Number(this.state.page)}</button>
-            <button id="button2" onClick={this.pageTwo} value={Number(this.state.page) + 1}>{Number(this.state.page) + 1}</button>
-            <button id="button3" onClick={this.pageThree}value={Number(this.state.page) + 2}>{Number(this.state.page) + 2}</button>
-            <button id="button4" onClick={this.pageFour}value={Number(this.state.page) + 3}>{Number(this.state.page) + 3}</button>
-            <button id="button5" onClick={this.pageFive}value={Number(this.state.page) + 4}>{Number(this.state.page) + 4}</button>
-           
+            <ul className="PageButtons">
+            <li className={"btn"+ this.state.page}id="button1" onClick={this.pageOne} value={Number(this.state.page) - 2}>{Number(this.state.page) - 2}</li>
+            <li className={"btn"+ (Number(this.state.page)+1)} id="button2" onClick={this.pageTwo} value={Number(this.state.page) - 1}>{Number(this.state.page) - 1}</li>
+            <span className={"btn"+ this.state.navegation0}>
+            <li className={"btn"+ this.state.navegation0}id="button3" onClick={this.pageThree}value={Number(this.state.page)}>{Number(this.state.page) }</li>
+             </span>
+            <li className={"btn"+ this.state.navegation2} id="button4" onClick={this.pageFour}value={Number(this.state.page) + 1}>{Number(this.state.page) + 1}</li>
+            <li className={"btn"+ this.state.navegation1} id="button5" onClick={this.pageFive}value={Number(this.state.page) + 2}>{Number(this.state.page) + 2}</li>
+            </ul>
        </div>
         );
     }
 }
 
-// Se a pagina atual == 1 -> não mostra botão 1 e 2
-// Se a pagina atual == 2 -> não mostra botão 1 
 
-// Se a pagina atual == total_pages -> não mostra botão 4 e 5
-// Se a pagina atual == total_pages-1 -> não mostra botão 5
+// Desenvolvido por Pierre Torres
+// github.com/pierretorres
